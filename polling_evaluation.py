@@ -4,7 +4,7 @@
 # In[1]:
 
 
-get_ipython().system('pip install realclearpolitics')
+get_ipython().system('pip install realclearpolitics==1.4.0')
 
 
 # In[2]:
