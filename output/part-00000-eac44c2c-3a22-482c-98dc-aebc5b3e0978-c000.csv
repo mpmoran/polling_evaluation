@@ -1,0 +1,39 @@
+poll,date_range,sample_size,margin_of_error,trump,biden,winner,is_winner_correct,spread,trump_distance,biden_distance,total_distance
+Texas LyceumTexas Lyceum,1/10 - 1/19,520,4.3,51.0,46.0,trump,true,5.0,1.2,0.4,1.6
+UMass LowellUMLowell,9/18 - 9/25,882,4.3,50.0,46.0,trump,true,4.0,2.2,0.4,2.6
+University of HoustonU. of Houston,10/13 - 10/20,1000,3.1,50.0,45.0,trump,true,5.0,2.2,1.4,3.6
+Rasmussen ReportsRasmussen,10/5 - 10/6,1000,3.0,51.0,44.0,trump,true,7.0,1.2,2.4,3.6
+UT/Texas Tribune*UT/Texas Tribune*,9/25 - 10/4,908,4.1,50.0,45.0,trump,true,5.0,2.2,1.4,3.6
+QuinnipiacQuinnipiac,9/17 - 9/21,1078,3.0,50.0,45.0,trump,true,5.0,2.2,1.4,3.6
+RCP Average,10/20 - 10/31,"","",47.8,46.5,trump,true,1.3,4.4,0.1,4.5
+CBS News/YouGovCBS News,9/15 - 9/18,1205,3.5,48.0,46.0,trump,true,2.0,4.2,0.4,4.6
+Dallas Morning News*DMN*,8/28 - 9/2,901,3.3,48.0,46.0,trump,true,2.0,4.2,0.4,4.6
+NBC News/MaristNBC/Marist,2/23 - 2/27,2409,2.5,49.0,45.0,trump,true,4.0,3.2,1.4,4.6
+UMass Lowell*UMass Lowell*,10/20 - 10/26,873,4.2,48.0,47.0,trump,true,1.0,4.2,0.6,4.8
+CNNCNN,12/4 - 12/8,1003,3.7,48.0,47.0,trump,true,1.0,4.2,0.6,4.8
+UT/Texas TribuneUT/ TX Tribune,4/10 - 4/19,1200,2.8,49.0,44.0,trump,true,5.0,3.2,2.4,5.6
+QuinnipiacQuinnipiac,2/20 - 2/25,1222,3.4,47.0,46.0,trump,true,1.0,5.2,0.4,5.6
+EmersonEmerson,10/29 - 10/31,763,3.5,49.0,49.0,tie,false,0.0,3.2,2.6,5.8
+QuinnipiacQuinnipiac,10/16 - 10/19,1145,2.9,47.0,47.0,tie,false,0.0,5.2,0.6,5.8
+Trafalgar Group (R)*Trafalgar (R)*,8/1 - 8/5,1015,3.0,49.0,43.0,trump,true,6.0,3.2,3.4,6.6
+University of TexasUniversity of Texas,6/19 - 6/29,1200,2.8,48.0,44.0,trump,true,4.0,4.2,2.4,6.6
+CNNCNN,2/22 - 2/26,1003,3.0,47.0,48.0,biden,false,1.0,5.2,1.6,6.8
+EmersonEmerson,4/25 - 4/28,799,3.4,49.0,50.0,biden,false,1.0,3.2,3.6,6.8
+CBS News/YouGovCBS News,7/7 - 7/10,1212,3.3,46.0,45.0,trump,true,1.0,6.2,1.4,7.6
+DMN/EmersonDMN/Emerson,8/1 - 8/3,1033,3.0,49.0,51.0,biden,false,2.0,3.2,4.6,7.8
+NY Times/Siena*NYT/Siena*,10/20 - 10/25,802,3.8,47.0,43.0,trump,true,4.0,5.2,3.4,8.6
+OAN/GravisGravis,7/7 - 7/7,591,4.3,46.0,44.0,trump,true,2.0,6.2,2.4,8.6
+UT/Texas TribuneUT/ TX Tribune,1/31 - 2/9,1200,2.8,47.0,43.0,trump,true,4.0,5.2,3.4,8.6
+Dallas Morning NewsDMN,1/21 - 1/30,915,3.2,46.0,44.0,trump,true,2.0,6.2,2.4,8.6
+Dallas Morning News*DMN*,10/13 - 10/20,925,3.2,45.0,48.0,biden,false,3.0,7.2,1.6,8.8
+NY Times/Siena*NYT/Siena*,9/16 - 9/21,653,4.3,46.0,43.0,trump,true,3.0,6.2,3.4,9.6
+Rice Univ./YouGov*YouGov*,8/4 - 8/13,846,"",48.0,41.0,trump,true,7.0,4.2,5.4,9.6
+QuinnipiacQuinnipiac,7/16 - 7/20,880,3.3,44.0,45.0,biden,false,1.0,8.2,1.4,9.6
+FOX NewsFOX News,6/20 - 6/23,1001,3.0,44.0,45.0,biden,false,1.0,8.2,1.4,9.6
+Dallas Morning NewsDMN,2/17 - 2/26,1221,2.8,45.0,44.0,trump,true,1.0,7.2,2.4,9.6
+QuinnipiacQuinnipiac,5/29 - 6/4,1159,3.4,44.0,48.0,biden,false,4.0,8.2,1.6,9.8
+EmersonEmerson,5/8 - 5/10,800,3.4,47.0,41.0,trump,true,6.0,5.2,5.4,10.6
+Dallas Morning NewsDMN,6/29 - 7/7,1677,2.4,43.0,48.0,biden,false,5.0,9.2,1.6,10.8
+QuinnipiacQuinnipiac,5/28 - 6/1,1166,2.9,44.0,43.0,trump,true,1.0,8.2,3.4,11.6
+Dallas Morning NewsDMN,4/18 - 4/27,1183,2.9,43.0,43.0,tie,false,0.0,9.2,3.4,12.6
+UT/Texas TribuneUT/ TX Tribune,10/18 - 10/27,1200,2.8,46.0,39.0,trump,true,7.0,6.2,7.4,13.6
