@@ -46,38 +46,16 @@ df = spark.read.csv('texas_trump_vs_biden-6818.csv',
                     enforceSchema=False,
                     mode='FAILFAST')
 
-
-# In[7]:
-
-
-df = (
-    df.withColumnRenamed('Poll', 'poll')
-      .withColumnRenamed('Date', 'date_range')
-      .withColumnRenamed('Sample', 'sample_size')
-      .withColumnRenamed('MoE', 'margin_of_error')
-      .withColumnRenamed('Trump (R)', 'trump')
-      .withColumnRenamed('Biden (D)', 'biden')
-      .withColumnRenamed('Spread', 'spread')
-)
-
-
-# In[8]:
-
-
 df.createOrReplaceTempView('tx_pres_polls_raw')
 
-
-# In[9]:
-
-
+print('schema\n'
+      '======')
 spark.sql('''
-DESCRIBE tx_pres_polls_raw
+    DESCRIBE tx_pres_polls_raw
 ''').show(truncate=False)
 
-
-# In[10]:
-
-
+print('peek\n'
+      '====')
 spark.sql('''
     SELECT *
     FROM tx_pres_polls_raw
@@ -85,7 +63,36 @@ spark.sql('''
 ''').show(truncate=False)
 
 
-# In[11]:
+# In[7]:
+
+
+spark.sql('''
+    SELECT `Poll` as poll,
+           `Date` as date_range,
+           `Sample` as sample_size,
+           `MoE` as margin_of_error,
+           `Trump (R)` as trump,
+           `Biden (D)` as biden,
+           `Spread` as spread
+    FROM tx_pres_polls_raw
+''').createOrReplaceTempView('tx_pres_polls_stage1')
+
+print('schema\n'
+      '======')
+spark.sql('''
+    DESCRIBE tx_pres_polls_stage1
+''').show(truncate=False)
+
+print('peek\n'
+      '====')
+spark.sql('''
+    SELECT *
+    FROM tx_pres_polls_stage1
+    LIMIT 10
+''').show(truncate=False)
+
+
+# In[8]:
 
 
 spark.sql('''
@@ -97,17 +104,18 @@ spark.sql('''
            CASE WHEN split(spread, ' ', -1)[0] = 'Tie'
                 THEN 0.0
                 ELSE cast(split(spread, ' ', -1)[1] as double) END AS spread
-    FROM tx_pres_polls_raw
+    FROM tx_pres_polls_stage1
     WHERE poll = 'Final Results'
 ''').createOrReplaceTempView('tx_pres_results')
 
-
-# In[12]:
-
-
+print('schema\n'
+      '======')
 spark.sql('''
     DESCRIBE tx_pres_results
-''').show()
+''').show(truncate=False)
+
+print('peek\n'
+      '====')
 spark.sql('''
     SELECT *
     FROM tx_pres_results
@@ -115,7 +123,7 @@ spark.sql('''
 ''').show(truncate=False)
 
 
-# In[13]:
+# In[9]:
 
 
 spark.sql('''
@@ -130,41 +138,45 @@ spark.sql('''
            CASE WHEN split(spread, ' ', -1)[0] = 'Tie'
                 THEN 0.0
                 ELSE cast(split(spread, ' ', -1)[1] as double) END AS spread
-    FROM tx_pres_polls_raw
+    FROM tx_pres_polls_stage1
     WHERE poll != 'Final Results'
-''').createOrReplaceTempView('tx_pres_polls_stage1')
+''').createOrReplaceTempView('tx_pres_polls_stage2')
 
-
-# In[14]:
-
-
+print('schema\n'
+      '======')
 spark.sql('''
-    DESCRIBE tx_pres_polls_stage1
-''').show()
+    DESCRIBE tx_pres_polls_stage2
+''').show(truncate=False)
+
+print('peek\n'
+      '====')
 spark.sql('''
     SELECT *
-    FROM tx_pres_polls_stage1
+    FROM tx_pres_polls_stage2
     LIMIT 10
 ''').show()
 
 
-# In[15]:
+# In[10]:
 
 
 spark.sql('''
     SELECT *,
            (SELECT spread FROM tx_pres_results LIMIT 1) as results_spread,
-           round(spread - (SELECT spread FROM tx_pres_results LIMIT 1), 1) as spread_diff
-    FROM tx_pres_polls_stage1
+           CASE WHEN winner = 'trump'
+                THEN round(spread - (SELECT spread FROM tx_pres_results LIMIT 1), 1)
+                ELSE round(spread + (SELECT spread FROM tx_pres_results LIMIT 1), 1) END AS spread_error
+    FROM tx_pres_polls_stage2
 ''').createOrReplaceTempView('tx_pres_polls')
 
-
-# In[16]:
-
-
+print('schema\n'
+      '======')
 spark.sql('''
     DESCRIBE tx_pres_polls
-''').show()
+''').show(truncate=False)
+
+print('peek\n'
+      '====')
 spark.sql('''
     SELECT *
     FROM tx_pres_polls
@@ -172,7 +184,7 @@ spark.sql('''
 ''').show()
 
 
-# In[17]:
+# In[11]:
 
 
 print('top 5 polls\n'
@@ -180,13 +192,12 @@ print('top 5 polls\n'
 spark.sql('''
     SELECT *
     FROM tx_pres_polls
-    WHERE is_winner_correct = true
-    ORDER BY abs(spread_diff) ASC
+    ORDER BY abs(spread_error) ASC
     LIMIT 5
 ''').toPandas()
 
 
-# In[18]:
+# In[12]:
 
 
 print('bottom 5 polls\n'
@@ -194,8 +205,7 @@ print('bottom 5 polls\n'
 spark.sql('''
     SELECT *
     FROM tx_pres_polls
-    WHERE is_winner_correct = false
-    ORDER BY abs(spread_diff) DESC
+    ORDER BY abs(spread_error) DESC
     LIMIT 5
 ''').toPandas()
 
