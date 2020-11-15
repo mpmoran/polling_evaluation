@@ -31,7 +31,7 @@ from pyspark.sql import SparkSession
 def create_view(spark, name, sql_statement):
     """
     SparkSession, str, str -> None
-    
+
     create view using sql_statement
     """
     spark.sql(sql_statement).createOrReplaceTempView(name)
@@ -40,7 +40,7 @@ def create_view(spark, name, sql_statement):
 def show_schema(spark, name, truncate):
     """
     SparkSession, str, bool -> None
-    
+
     show schema of table or view
     """
     title = f'{name} schema'
@@ -55,13 +55,13 @@ def show_schema(spark, name, truncate):
 def show_peek(spark, name, num_rows, truncate):
     """
     SparkSession, str, int, bool -> None
-    
+
     show num_rows from table or view
     """
     title = f'{name} peek'
     print(title)
     print('=' * len(title))
-    
+
     spark.sql(f'''
         SELECT *
         FROM {name}
@@ -111,7 +111,7 @@ context = {
         {
             'name': 'tx_pres_polls_stage2',
             'sql_statement': '''
-                SELECT poll, 
+                SELECT poll,
                        date_range,
                        cast(split(sample_size, ' ', -1)[0] as int) as sample_size,
                        cast(margin_of_error as double) as margin_of_error,
@@ -127,7 +127,7 @@ context = {
             ''',
             'peek_rows': 10,
             'truncate_show': True,
-            
+
         },
         {
             'name': 'tx_pres_polls_stage3',
