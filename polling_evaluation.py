@@ -162,11 +162,33 @@ spark.sql('''
 
 spark.sql('''
     SELECT *,
-           (SELECT spread FROM tx_pres_results LIMIT 1) as results_spread,
-           CASE WHEN winner = 'trump'
-                THEN round(spread - (SELECT spread FROM tx_pres_results LIMIT 1), 1)
-                ELSE round(spread + (SELECT spread FROM tx_pres_results LIMIT 1), 1) END AS spread_error
+           round(abs((SELECT trump from tx_pres_results) - trump), 1) as trump_distance,
+           round(abs((SELECT biden from tx_pres_results) - biden), 1) as biden_distance
     FROM tx_pres_polls_stage2
+''').createOrReplaceTempView('tx_pres_polls_stage3')
+
+print('schema\n'
+      '======')
+spark.sql('''
+    DESCRIBE tx_pres_polls_stage3
+''').show(truncate=False)
+
+print('peek\n'
+      '====')
+spark.sql('''
+    SELECT *
+    FROM tx_pres_polls_stage3
+    LIMIT 10
+''').show()
+
+
+# In[11]:
+
+
+spark.sql('''
+    SELECT *,
+           round(abs(trump_distance + biden_distance), 1) as total_distance
+    FROM tx_pres_polls_stage3
 ''').createOrReplaceTempView('tx_pres_polls')
 
 print('schema\n'
@@ -184,7 +206,19 @@ spark.sql('''
 ''').show()
 
 
-# In[11]:
+# In[12]:
+
+
+print('actual results\n'
+      '==============')
+spark.sql('''
+    SELECT *
+    FROM tx_pres_results
+    LIMIT 10
+''').show(truncate=False)
+
+
+# In[13]:
 
 
 print('top 5 polls\n'
@@ -192,12 +226,12 @@ print('top 5 polls\n'
 spark.sql('''
     SELECT *
     FROM tx_pres_polls
-    ORDER BY abs(spread_error) ASC
+    ORDER BY total_distance ASC
     LIMIT 5
 ''').toPandas()
 
 
-# In[12]:
+# In[14]:
 
 
 print('bottom 5 polls\n'
@@ -205,7 +239,7 @@ print('bottom 5 polls\n'
 spark.sql('''
     SELECT *
     FROM tx_pres_polls
-    ORDER BY abs(spread_error) DESC
+    ORDER BY total_distance DESC
     LIMIT 5
 ''').toPandas()
 
